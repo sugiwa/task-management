@@ -64,3 +64,28 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
+model TaskCategory {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  tasks                Task[]
+  TaskCategoriesOnTask TaskCategoriesOnTask[]
+}
+
+model Task {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  memo                 String?
+  categories           TaskCategory[]
+  TaskCategoriesOnTask TaskCategoriesOnTask[]
+}
+
+model TaskCategoriesOnTask {
+  task       Task         @relation(fields: [taskId], references: [id])
+  taskId     Int
+  category   TaskCategory @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  assignedAt DateTime     @default(now())
+
+  @@id([taskId, categoryId])
+}
