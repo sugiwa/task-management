@@ -10,7 +10,21 @@ export const taskCategoryRouter = createTRPCRouter({
       };
     }),
 
-  findAll: protectedProcedure.query(({ ctx }) => {
+  findAll: publicProcedure.query(({ ctx }) => {
     return ctx.prisma.taskCategory.findMany();
   }),
+
+  create: publicProcedure
+    .input(
+      z.object({
+        name: z.string(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await ctx.prisma.taskCategory.create({
+        data: {
+          name: input.name,
+        },
+      });
+    }),
 });
