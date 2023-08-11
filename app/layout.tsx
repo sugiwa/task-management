@@ -3,14 +3,14 @@ import { type Session } from "next-auth";
 import { type AppType } from "next/app";
 import { api } from "~/utils/api";
 import "~/styles/globals.css";
-import SessionProviderWrapper from "~/context/SessionProvider";
+import AuthProvider from "~/providers/AuthProvider";
 import { type ReactNode } from "react";
 
 const MyApp = function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body>
-        <SessionProviderWrapper>{children}</SessionProviderWrapper>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );
